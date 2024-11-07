@@ -1,4 +1,3 @@
-# app.py
 from flask import Flask, request, jsonify
 import redis
 from config import Config
@@ -26,6 +25,16 @@ def chat():
     redis_client.rpush('chat_history', f"Query: {query}\nResponse: {response}")
 
     return jsonify({'response': response})
+
+@app.route('/chat_history', methods=['GET'])
+def chat_history():
+    # Retrieve all messages from Redis
+    redis_client = redis_instance()
+    messages = redis_client.lrange('chat_history', 0, -1)
+    # Decode messages to strings and format as a JSON response
+    formatted_messages = [msg.decode('utf-8') for msg in messages]
+    return jsonify({'messages': formatted_messages})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

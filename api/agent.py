@@ -1,4 +1,3 @@
-# agent.py
 from swarmauri.vector_stores.concrete.TfidfVectorStore import TfidfVectorStore
 from swarmauri.conversations.concrete.MaxSystemContextConversation import MaxSystemContextConversation
 from swarmauri.messages.concrete.SystemMessage import SystemMessage
@@ -9,7 +8,7 @@ from decouple import config
 GROQ_API_KEY = config('GROQ_API_KEY')
 
 vector_store = TfidfVectorStore()
-rag_system_context = "You are motorsport racing expert. Answer questions about it precisely and concisely."
+rag_system_context = "You are a motorsport racing expert. Answer questions about it precisely and concisely."
 rag_conversation = MaxSystemContextConversation(
     system_context=SystemMessage(content=rag_system_context), max_size=4)
 rag_agent = RagAgent(
